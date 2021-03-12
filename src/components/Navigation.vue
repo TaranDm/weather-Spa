@@ -1,20 +1,40 @@
 <template>
-    <header class=" header">
-        <nav class="nav container">
-            <span>Add City</span>
-            <div class="right">
-<!--                icons-->
-                <span @click="editCity" ref="editCities" class="icon-pencil"></span>
-                <span @click="reloadApp" class="icon-loop2" ></span>
-                <span @click="addNewCity" class="icon-plus"></span>
-            </div>
-        </nav>
-    </header>
+    <div>
+        <header v-if="addCityActive" class=" header">
+            <nav class="nav container">
+                <span>Add City</span>
+                <div class="right">
+                    <!--                icons-->
+                    <span @click="editCity" ref="editCities" class="icon-pencil"></span>
+                    <span @click="reloadApp" class="icon-loop2" ></span>
+                    <span @click="addNewCity" class="icon-plus"></span>
+                </div>
+            </nav>
+        </header>
+<!--        подробная инфо ло погоде-->
+        <header class="header" v-else>
+            <nav class="nav container">
+                <router-link class="router-link" :to="{ name:'addNewCity'}">
+                    <span class="icon-arrow-left2"></span>
+                </router-link>
+<!--                текущее время и дата-->
+                <span>
+                    {{ new Date().toLocaleString("en-us", { weekday: "short" }) }},
+          {{ new Date().toLocaleString("en-us", { month: "short" }) }}
+          {{ new Date().toLocaleString("en-us", { day: "2-digit" }) }}
+                </span
+                >
+                <span>С &deg;</span>
+            </nav>
+        </header>
+    </div>
+
 </template>
 
 <script>
     export default {
         name: "Navigation",
+        props:["addCityActive"],
         methods: {
             addNewCity() {
                 this.$emit("add-NewCity")
@@ -47,7 +67,12 @@
                 font-weight: 700;
             }
         }
+    }
+    .router-link {
+        color: #fff;
+        span{
 
+        }
     }
     .edit-active {
         color: #2f81bd;

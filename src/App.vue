@@ -1,12 +1,13 @@
 <template>
   <div id="app">
       <modalWindow v-if="openModal" v-on:modalCloses="toggleModal" :APIkey="APIkey"/>
-      <Navigation v-on:add-NewCity="toggleModal" v-on:editCity="toggleEdit" />
-    <router-view :cities="cities" :edit="edit"/>
+      <Navigation v-on:add-NewCity="toggleModal" v-on:editCity="toggleEdit" :addCityActive="addCityActive"/>
+    <router-view :cities="cities" :edit="edit" :APIkey="APIkey"/>
   </div>
 </template>
 <script>
     import axios from "axios";
+    import { mapGetters, } from 'vuex'
       import db from "./firebase/firebaseinit";
       import Navigation from "./components/Navigation";
       import modalWindow from "./components/Modal-Window";
@@ -19,16 +20,17 @@
         data() {
           return {
               errored:false,
-              APIkey: "6dfddc0eef08784a697c4a41a452ce2a",
-               lang: 'Ru',
-              cities: [],
+               cities: [],
               openModal: false,
               edit: false,
+          //    переменная для хранения информации для каждого отдельного города
+              addCityActive: null,
 
           }
         },
         created() {
             this.getCityWeather();
+            this.checkRoute()
         },
         methods: {
             // Получение данных из firebace
@@ -81,7 +83,28 @@
              //         }))
              // }
 
+            //
+            checkRoute() {
+                if(this.$route.name === "addNewCity") {
+                    this.addCityActive = true;
+                } else {
+                    this.addCityActive = false;
+                }
+                // console.log(this.addCityActive)
+            },
         },
+        watch: {
+            $route() {
+                this.checkRoute();
+            },
+        },
+        computed: {
+            ...mapGetters([
+                'APIkey',
+                'lang',
+
+            ]),
+        }
     }
 </script>
 

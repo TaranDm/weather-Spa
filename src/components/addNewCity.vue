@@ -31,7 +31,6 @@
 
 <style lang="scss" scoped>
 .add-city{
-    background-color: #9c9c9c;
     padding-top: 81px;
     min-height: 100%;
 

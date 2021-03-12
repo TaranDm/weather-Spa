@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import addNewCity from "../components/addNewCity";
+import addNewCity from "../components/addNewCity"
+import weatherDetails from "../views/Weather-details"
 
 Vue.use(VueRouter)
 
@@ -10,6 +11,11 @@ const routes = [
     name: 'addNewCity',
     component: addNewCity
   },
+    {
+        path: '/weatherDetails/:city',
+        name: 'weatherDetails',
+        component: weatherDetails
+    },
 
 ]
 

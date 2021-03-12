@@ -1,5 +1,5 @@
 <template>
-    <div  class="modal" ref="modal" @click="modalCloses">
+    <div class="modal" ref="modal" @click="modalCloses">
         <div class="modal__wrapper" ref="modalWrapper">
             <label for="city-name">Enter Location:</label>
             <input type="text" id="city-name" name="city-name" placeholder="Enter the name of the city" v-model="city">
@@ -43,7 +43,7 @@
                        currentWeather: data,
                    }).then(()=>{
                        this.$emit("modalCloses")
-                       console.log()
+                       // console.log()
                    })
 
                }

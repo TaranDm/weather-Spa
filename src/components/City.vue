@@ -1,13 +1,13 @@
 <template>
-    <div class="city">
+    <div @click="goToWeather" class="city">
         <span>{{city.city}}</span>
         <div class="weather">
             <div class="weather__wrapper">
             <span>{{Math.round(this.city.currentWeather.main.temp)}}&deg;</span>
-            <img :src="iconWeather" alt="">
+            <img :src="this.iconWeather" alt="">
             </div>
             <span class="weather__status">{{weatherStatus}}</span>
-            <span @click="removeCity" v-if="edit" class="edit icon-bin"></span>
+            <span @click="removeCity" v-if="edit" ref="edit" class="edit icon-bin"></span>
         </div>
 
 
@@ -17,25 +17,24 @@
 
 <script>
      import db from "../firebase/firebaseinit";
+     // import { mapGetters, } from 'vuex'
     export default {
         name: "City",
         props: ["city", "edit"],
         created() {
-            console.log(this.city);
         },
         data() {
             return {
                   //динмаическая иконка погоды
-                  iconWeather: `http://openweathermap.org/img/wn/${this.city.currentWeather.weather[0].icon}@2x.png`,
+                   iconWeather: `http://openweathermap.org/img/wn/${this.city.currentWeather.weather[0].icon}@2x.png`,
                 //статус погоды
-                weatherStatus: this.city.currentWeather.weather[0].description,
+                  weatherStatus: this.city.currentWeather.weather[0].description,
                 id: null,
             }
         },
         methods:{
             //удаление города
             removeCity(){
-                console.log('db', db)
                 db.firestore().collection("cities")
                     .where("city", "==", `${this.city.city}`)
                 .get()
@@ -44,8 +43,19 @@
                 }).then(()=>{
                     db.firestore().collection("cities").doc(this.id).delete()
                 })
-            }
-        }
+            },
+            //открытие детального окна о погоде
+            //
+            goToWeather(e){
+                if (e.target === this.$refs.edit){
+                    //
+                } else {
+                    this.$router.push({name: "weatherDetails", params:{city: this.city.city}})
+                }
+            },
+
+        },
+
     }
 </script>
 
