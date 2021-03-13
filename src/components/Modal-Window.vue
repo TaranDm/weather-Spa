@@ -10,11 +10,12 @@
 </template>
 
 <script>
-    import axios from "axios";
-    import db from "../firebase/firebaseinit"
+    // import axios from "axios";
+    // import db from "../firebase/firebaseinit"
+
     export default {
         name: "modal-window",
-        props:["APIkey"],
+        props:["APIkey", "cities"],
         data(){
             return {
                 city:""
@@ -27,29 +28,28 @@
                 }
             },
             // Добавление города через input
-            async addNewCity(){
+            addNewCity(){
+               // если поле пустое
                if(this.city === ""){
-                   alert("please fill in the field")
-               } else {
-                   const response = await axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${this.city}&appid=${this.APIkey}&units=metric`)
-                   //data вызывает запрос города через Api
-                   const data = await response.data;
-                   // console.log(data)
-                   //firebase
-                   db.firestore().collection('cities')
-                       .doc()
-                       .set({
-                       city: this.city,
-                       currentWeather: data,
-                   }).then(()=>{
-                       this.$emit("modalCloses")
-                       // console.log()
-                   })
-
+                   alert("please fill in the field");
                }
-
-            }
-        }
+              //если город уже добавлен
+               else if (this.cities.some((res) => res.city === this.city.toLowerCase())) {
+                   alert(`${this.city} already exists!`)
+               } else {
+                   this.$store.dispatch('addCityWeather', this.city).then(
+                       () => {
+                           this.$emit("modalCloses")
+                       }
+                   ).catch(
+                       //если города нет- ошибка
+                       () => {
+                           alert(`The city name ${this.city} does not exist, please enter the city name correctly `)
+                       }
+                   );
+               }
+            },
+        },
 
     }
 </script>

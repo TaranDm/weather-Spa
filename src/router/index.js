@@ -12,7 +12,7 @@ const routes = [
     component: addNewCity
   },
     {
-        path: '/weatherDetails/:city',
+        path: '/weatherDetails/:id/:city',
         name: 'weatherDetails',
         component: weatherDetails
     },

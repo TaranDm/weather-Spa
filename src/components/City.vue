@@ -1,13 +1,14 @@
 <template>
     <div @click="goToWeather" class="city">
-        <span>{{city.city}}</span>
+        <span>{{this.city.name}}</span>
         <div class="weather">
             <div class="weather__wrapper">
-            <span>{{Math.round(this.city.currentWeather.main.temp)}}&deg;</span>
+            <span>{{Math.round(this.city.main.temp)}}&deg;</span>
             <img :src="this.iconWeather" alt="">
             </div>
             <span class="weather__status">{{weatherStatus}}</span>
-            <span @click="removeCity" v-if="edit" ref="edit" class="edit icon-bin"></span>
+            <span @click="updateCityWeather" class="icon-loop2"></span>
+            <span @click="removeCity" v-show="edit" ref="edit" class="edit icon-bin"></span>
         </div>
 
 
@@ -16,7 +17,10 @@
 
 
 <script>
-     import db from "../firebase/firebaseinit";
+     // import db from "../firebase/firebaseinit";
+     import Vue from 'vue'
+     import VueCookies from 'vue-cookies'
+     Vue.use(VueCookies)
      // import { mapGetters, } from 'vuex'
     export default {
         name: "City",
@@ -26,32 +30,40 @@
         data() {
             return {
                   //динмаическая иконка погоды
-                   iconWeather: `http://openweathermap.org/img/wn/${this.city.currentWeather.weather[0].icon}@2x.png`,
+                   iconWeather: `http://openweathermap.org/img/wn/${this.city.weather[0].icon}@2x.png`,
                 //статус погоды
-                  weatherStatus: this.city.currentWeather.weather[0].description,
+                  weatherStatus: this.city.weather[0].description,
                 id: null,
             }
         },
         methods:{
+            updateCityWeather(e) {
+                e.stopPropagation()
+                this.$store.dispatch('updateCityWeather', this.city.id);
+            },
             //удаление города
-            removeCity(){
-                db.firestore().collection("cities")
-                    .where("city", "==", `${this.city.city}`)
-                .get()
-                    .then((docs) => {
-                     docs.forEach((doc)=> {this.id = doc.id})
-                }).then(()=>{
-                    db.firestore().collection("cities").doc(this.id).delete()
-                })
+            removeCity(e){
+                e.stopPropagation()
+                this.$store.dispatch('removeCityWeather', this.city.id);
+
+
+                // db.firestore().collection("cities")
+                //     .where("city", "==", `${this.city.city}`)
+                // .get()
+                //     .then((docs) => {
+                //      docs.forEach((doc)=> {this.id = doc.id})
+                // }).then(()=>{
+                //     db.firestore().collection("cities").doc(this.id).delete()
+                // })
             },
             //открытие детального окна о погоде
             //
-            goToWeather(e){
-                if (e.target === this.$refs.edit){
-                    //
-                } else {
-                    this.$router.push({name: "weatherDetails", params:{city: this.city.city}})
-                }
+            goToWeather(){
+                // if (e.target === this.$refs.edit){
+                //     //
+                // } else {
+                    this.$router.push({name: "weatherDetails", params:{city: this.city.name, id: this.city.id}})
+                // }
             },
 
         },
@@ -70,7 +82,9 @@
         height: 100%;
         box-shadow: 0 1px 2px 0 #fff;
         color: #fff;
+        text-transform: capitalize;
         span {
+
             z-index: 1;
 
             display: block;

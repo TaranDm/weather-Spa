@@ -3,7 +3,7 @@
     <div class="weekly-forecast">
         <div class="container">
             <div class="daily" v-for="(day, index) in filteredList" :key="index">
-                <DailyForecast />
+                <DailyForecast :day="day"/>
             </div>
         </div>
     </div>
