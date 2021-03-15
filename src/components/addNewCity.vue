@@ -8,12 +8,26 @@
             <button @click="addNewCity">Add City</button>
         </div>
         <div class="add-city__content container">
-            <div class="add-city__city-link"
-                 v-for="(city, index) in cities" :key="index"
-            >
-                <City :city="city" :edit="edit"  />
+            <v-tooltip bottom
+                       v-for="(city, index) in cities" :key="index">
+                <template v-slot:activator="{ on, attrs }">
+                    <div class="add-city__city-link"
+                         data-app
+                         v-bind="attrs"
+                         v-on="on"
+                    >
+                        <City :city="city" :edit="edit"/>
+                    </div>
+                </template>
+                <div class="wrap">
+                    <span>feels like: {{city.main.feels_like}}&deg;</span>
+                    <span>humidity: {{city.main.humidity}}%</span>
+                    <span> temp min: {{city.main.temp_min}}&deg;</span>
+                    <span> temp max: {{city.main.temp_max}}&deg;</span>
+                    <span> wind gust: {{city.wind.speed}} meter/sec</span>
+                </div>
 
-            </div>
+            </v-tooltip>
         </div>
     </section>
 
@@ -29,7 +43,8 @@
         },
         props: ['cities', 'edit', 'loading'],
         created() {
-            console.log(this.cities);
+            console.log('citiessss', this.cities);
+
 
         },
         methods: {
@@ -42,6 +57,10 @@
 </script>
 
 <style lang="scss" scoped>
+    .wrap {
+        display: flex;
+        flex-direction: column;
+    }
 .add-city{
     padding-top: 81px;
     min-height: 100%;
@@ -89,6 +108,7 @@
         max-width: 300px;
         width: 100%;
         padding: 10px;
+        cursor: pointer;
 
         &:last-child {
             /*margin-right:0;*/

@@ -58,4 +58,23 @@ body {
     animation: spin ease 1000ms infinite;
   }
 }
+.os-host-resize-disabled.os-host-scrollbar-vertical-hidden > .os-scrollbar-horizontal, .os-host-rtl.os-host-resize-disabled.os-host-scrollbar-vertical-hidden > .os-scrollbar-horizontal
+.os-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+.os-scrollbar-handle {
+  cursor: grab !important;
+  top: 0;
+  background: rgba(0, 0, 0, 0.2);
+
+}
+.os-scrollbar-handle.active {
+  cursor: grabbing !important;
+  background: rgba(0, 0, 0, 0.4)!important;
+}
+.os-theme-dark > .os-scrollbar-horizontal, .os-theme-light > .os-scrollbar-horizontal {
+  height: 11px;
+}
+
 

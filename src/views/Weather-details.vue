@@ -26,6 +26,7 @@
     import WeeklyForecast from "../components/WeeklyForecast";
     import Vue from "vue";
 
+
     export default {
         name: "weatherDetails",
         components:{CurrentWeather, HourWeather, WeeklyForecast, },

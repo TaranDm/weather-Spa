@@ -1,17 +1,23 @@
 <!--импортируется в weather-details-->
 <template>
     <div class="hourly-weather">
-        <div class="container">
-            <span class="hourly-temp" v-for="(time, index) in filteredList" :key="index">
+
+
+            <overlay-scrollbars>
+                <div class="container">
+                 <span class="hourly-temp" v-for="(time, index) in filteredList" :key="index">
 <!--                time массив отдельного часа-->
-                <HourTemp :time="time" />
+                <HourTemp :time="time"/>
             </span>
-        </div>
+                </div>
+            </overlay-scrollbars>
+
     </div>
 </template>
 
 <script>
 import HourTemp from "./HourTemp";
+
     export default {
         name: "HourWeather",
         components: {HourTemp,},
@@ -41,26 +47,27 @@ import HourTemp from "./HourTemp";
         .container {
             display: flex;
             max-width: 100vw;
-            overflow: auto;
-            overflow-y: hidden;
-            overflow-x: scroll;
+            /*overflow: auto;*/
+            /*overflow-y: hidden;*/
+            /*overflow-x: scroll;*/
             padding-bottom: 20px;
             cursor: auto;
-            &::-webkit-scrollbar {
-                margin-bottom: 10px;
-                max-width: 4px;
+            scroll-behavior: smooth;
+            /*&::-webkit-scrollbar {*/
+            /*    margin-bottom: 10px;*/
+            /*    max-width: 4px;*/
 
-                height: 4px;
-                background-color: #aaa;
+            /*    height: 4px;*/
+            /*    background-color: #aaa;*/
 
 
-                /*display: none;*/
-            }
-            &::-webkit-scrollbar-thumb {
-                background: rgba(0, 0, 0, 0.3);
-                border-radius: 5px;
-
-            }
+            /*    !*display: none;*!*/
+            /*}*/
+            /*&::-webkit-scrollbar-thumb {*/
+            /*    background: rgba(0, 0, 0, 0.3);*/
+            /*    border-radius: 5px;*/
+            /*}*/
         }
     }
+
 </style>
