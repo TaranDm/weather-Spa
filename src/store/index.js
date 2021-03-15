@@ -84,11 +84,9 @@ export default new Vuex.Store({
           const response = await axios.get(`http://api.openweathermap.org/data/2.5/weather?id=${id}&appid=${this.state.APIkey}&lang=${this.state.lang}&units=metric`)
           //data вызывает запрос города через Api
           const data = await response.data;
-
           if (data && data.id) {
               commit('UPDATE_CITY_WEATHER', data);
           }
-
           return response;
       },
       async getCityWeather({commit}, id) {

@@ -19,7 +19,6 @@
       // import db from "./firebase/firebaseinit";
       import Navigation from "./components/Navigation";
       import modalWindow from "./components/Modal-Window";
-
     export default {
         name: "App",
         components: {
@@ -121,15 +120,8 @@
         }
     }
 </script>
-
 <style lang="scss" scoped>
     #app {
         height: 100vh;
     }
-
-
-
-
-
-
 </style>
