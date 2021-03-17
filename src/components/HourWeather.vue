@@ -1,8 +1,6 @@
 <!--импортируется в weather-details-->
 <template>
     <div class="hourly-weather">
-
-
             <overlay-scrollbars>
                 <div class="container">
                  <span class="hourly-temp" v-for="(time, index) in filteredList" :key="index">
@@ -11,35 +9,28 @@
             </span>
                 </div>
             </overlay-scrollbars>
-
     </div>
 </template>
-
 <script>
-import HourTemp from "./HourTemp";
+import HourTemp from './HourTemp.vue';
 
-    export default {
-        name: "HourWeather",
-        components: {HourTemp,},
-        props:['forecast',],
-        data() {
-            return {
-                time: ''
-            }
-        },
-        created() {
-            // массив с подробной информацией о погоде
-            console.log('forecast', this.forecast)
-        },
-        computed: {
-            //метод фильтрации массива. Выбираем 24 часа с прогнозом из 48
-            filteredList() {
-                return this.forecast.hourly.slice(0, 23)
-            }
-        }
-    }
+export default {
+  name: 'HourWeather',
+  components: { HourTemp },
+  props: ['forecast'],
+  data() {
+    return {
+      time: '',
+    };
+  },
+  computed: {
+    // метод фильтрации массива. Выбираем 24 часа с прогнозом из 48
+    filteredList() {
+      return this.forecast.hourly.slice(0, 23);
+    },
+  },
+};
 </script>
-
 <style lang="scss" scoped>
     .hourly-weather {
         padding: 15px 0;
@@ -47,26 +38,7 @@ import HourTemp from "./HourTemp";
         .container {
             display: flex;
             max-width: 100vw;
-            /*overflow: auto;*/
-            /*overflow-y: hidden;*/
-            /*overflow-x: scroll;*/
             padding-bottom: 20px;
-            cursor: auto;
-            scroll-behavior: smooth;
-            /*&::-webkit-scrollbar {*/
-            /*    margin-bottom: 10px;*/
-            /*    max-width: 4px;*/
-
-            /*    height: 4px;*/
-            /*    background-color: #aaa;*/
-
-
-            /*    !*display: none;*!*/
-            /*}*/
-            /*&::-webkit-scrollbar-thumb {*/
-            /*    background: rgba(0, 0, 0, 0.3);*/
-            /*    border-radius: 5px;*/
-            /*}*/
         }
     }
 

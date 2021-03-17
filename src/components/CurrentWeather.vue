@@ -6,30 +6,34 @@
                 <span class="city">{{ this.currentWeather.name }}</span>
 
                 <div class="current-weather__wrapper">
-                    <span class="current-weather__current-temperature">{{ Math.round(this.currentWeather.main.temp) }}&deg;</span>
+                    <span class="current-weather__current-temperature">
+                        {{ Math.round(this.currentWeather.main.temp) }}&deg;</span>
                     <div class="current-weather__weather-icon">
                         <img :src=this.weatherIcon alt="">
 
                     </div>
                 </div>
 <!--                текущая погода-->
-
-                <div class="high-low-temperatures">
-                    <div class="high">
-                        <span class="icon-arrow-up2"></span>
-<!--                        max темпиратура-->
-                        <span>{{ Math.round(this.currentWeather.main.temp_max) }}&deg;</span>
+                <div class="current-weather__info-block">
+                    <div class="high-low-temperatures">
+                        <div class="high">
+                            <span class="icon-arrow-up2"></span>
+                            <!--                        max темпиратура-->
+                            <span>{{ Math.round(this.currentWeather.main.temp_max) }}&deg;</span>
+                        </div>
+                        <div class="low">
+                            <span class="icon-arrow-down2"></span>
+                            <!--                        min темпиратура-->
+                            <span>{{ Math.round(this.currentWeather.main.temp_min) }}&deg;</span>
+                        </div>
                     </div>
-                    <div class="low">
-                        <span class="icon-arrow-down2"></span>
-                        <!--                        min темпиратура-->
-                        <span>{{ Math.round(this.currentWeather.main.temp_min) }}&deg;</span>
-                    </div>
+                    <!--                описание погоды-->
+                    <span class="current-weather__condition">
+                        {{ this.currentWeather.weather[0].description }}</span>
+                    <!--                человеческое восприятие погоды-->
+                    <span class="feels-like">Feels like
+                        {{ Math.round(this.currentWeather.main.feels_like) }}&deg;</span>
                 </div>
-<!--                описание погоды-->
-                <span class="current-weather__condition">{{ this.currentWeather.weather[0].description }}</span>
-<!--                человеческое восприятие погоды-->
-                <span class="feels-like">Feels like {{ Math.round(this.currentWeather.main.feels_like) }}&deg;</span>
 
             </div>
 
@@ -38,17 +42,16 @@
 </template>
 
 <script>
-    export default {
-        name: "CurrentWeather",
-        props: [ "currentWeather"],
-        data() {
-            return {
-                weatherIcon: `http://openweathermap.org/img/wn/${this.currentWeather.weather[0].icon}@2x.png`,
-            }
+export default {
+  name: 'CurrentWeather',
+  props: ['currentWeather'],
+  data() {
+    return {
+      weatherIcon: `http://openweathermap.org/img/wn/${this.currentWeather.weather[0].icon}@2x.png`,
+    };
+  },
 
-        }
-
-    }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -59,10 +62,12 @@
             min-height: 305px;
             position: relative;
             display: flex;
-            color: #fff;
         }
         span {
             display: block;
+        }
+        &__info-block {
+            padding-left: 10px;
         }
         &__weather-info {
             width: 100%;
@@ -88,11 +93,12 @@
         .high-low-temperatures {
             display: flex;
             gap: 16px;
+            margin-bottom: 10px;
             .high,
             .low {
                 display: flex;
                 span {
-                    margin-left: 8px;
+                    margin-right: 8px;
                 }
             }
         }
@@ -113,6 +119,9 @@
                 margin-top: -43px;
                 object-fit: cover;
             }
+        }
+        &__condition {
+            margin-bottom: 10px;
         }
     }
 </style>

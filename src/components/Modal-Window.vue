@@ -1,57 +1,55 @@
 <template>
     <div class="modal" ref="modal" @click="modalCloses">
         <div class="modal__wrapper" ref="modalWrapper">
-            <label for="city-name">Enter Location:</label>
-            <input type="text" id="city-name" name="city-name" placeholder="Enter the name of the city" v-model="city">
-            <button @click="addNewCity">add</button>
+                <label for="city-name">Enter Location:</label>
+                <input v-on:keyup.enter="addNewCity" type="text" id="city-name" name="city-name"
+                       placeholder="Enter the name of the city" v-model="city">
+                <button @click="addNewCity">add</button>
         </div>
-
     </div>
 </template>
 
 <script>
-    // import axios from "axios";
-    // import db from "../firebase/firebaseinit"
+export default {
+  name: 'modal-window',
+  props: ['APIkey', 'cities'],
+  data() {
+    return {
+      city: '',
+    };
+  },
+  methods: {
+    modalCloses(evt) {
+      if (evt.target === this.$refs.modal) {
+        this.$emit('modalCloses');
+      }
+    },
+    // Добавление города через input
+    addNewCity() {
+      if (this.city === '') {
+        // eslint-disable-next-line
+        alert('please fill in the field');
+      } else if (this.cities.some((res) => res.name.toLowerCase() === this.city.toLowerCase())) {
+        // eslint-disable-next-line
+        alert(`${this.city} already exists!`);
+      } else {
+        this.$store.dispatch('addCityWeather', this.city).then(
+          () => {
+            this.$emit('modalCloses');
+          },
+        ).catch(
+          // если города нет- ошибка
+          () => {
+            // eslint-disable-next-line
+            alert(`The city name ${this.city}
+            does not exist, please enter the city name correctly `);
+          },
+        );
+      }
+    },
+  },
 
-    export default {
-        name: "modal-window",
-        props:["APIkey", "cities"],
-        data(){
-            return {
-                city:""
-            };
-        },
-        methods:{
-            modalCloses(evt) {
-                if(evt.target === this.$refs.modal){
-                    this.$emit("modalCloses")
-                }
-            },
-            // Добавление города через input
-            addNewCity(){
-               // если поле пустое
-               if(this.city === ""){
-                   alert("please fill in the field");
-               }
-              //если город уже добавлен
-               else if (this.cities.some((res) => res.city === this.city.toLowerCase())) {
-                   alert(`${this.city} already exists!`)
-               } else {
-                   this.$store.dispatch('addCityWeather', this.city).then(
-                       () => {
-                           this.$emit("modalCloses")
-                       }
-                   ).catch(
-                       //если города нет- ошибка
-                       () => {
-                           alert(`The city name ${this.city} does not exist, please enter the city name correctly `)
-                       }
-                   );
-               }
-            },
-        },
-
-    }
+};
 </script>
 
 <style scoped lang="scss">
@@ -65,7 +63,7 @@
         justify-content: center;
         align-items: center;
         label {
-            color: #fff;
+
         }
         button {
             background: #464646;
@@ -76,7 +74,6 @@
             border: none;
             border-radius: 10px;
             box-shadow: 0 30px 50px rgba(0, 0, 0, 0.7);
-
 
         }
         &__wrapper {

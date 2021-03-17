@@ -10,19 +10,20 @@
 </template>
 
 <script>
-    import DailyForecast from "./DailyForecast";
-    export default {
-        name: "WeeklyForecast",
-        props: ['forecast',],
-        components: {
-            DailyForecast,
-        },
-        computed: {
-            filteredList() {
-                return this.forecast.daily.slice(1, 8);
-            },
-        },
-    }
+import DailyForecast from './DailyForecast.vue';
+
+export default {
+  name: 'WeeklyForecast',
+  props: ['forecast'],
+  components: {
+    DailyForecast,
+  },
+  computed: {
+    filteredList() {
+      return this.forecast.daily.slice(1, 8);
+    },
+  },
+};
 
 </script>
 

@@ -1,58 +1,59 @@
 <template>
-    <div v-if="loading" class="loading">
-        <span></span>
-    </div>
-    <section v-else  class="add-city">
-        <div v-if="cities.length === 0" class="no-cities">
-            <p>No cities added, add a new one?</p>
-            <button @click="addNewCity">Add City</button>
-        </div>
-        <div class="add-city__content container">
-            <v-tooltip bottom
-                       v-for="(city, index) in cities" :key="index">
-                <template v-slot:activator="{ on, attrs }">
-                    <div class="add-city__city-link"
-                         data-app
-                         v-bind="attrs"
-                         v-on="on"
-                    >
-                        <City :city="city" :edit="edit"/>
-                    </div>
-                </template>
-                <div class="wrap">
-                    <span>feels like: {{city.main.feels_like}}&deg;</span>
-                    <span>humidity: {{city.main.humidity}}%</span>
-                    <span> temp min: {{city.main.temp_min}}&deg;</span>
-                    <span> temp max: {{city.main.temp_max}}&deg;</span>
-                    <span> wind gust: {{city.wind.speed}} meter/sec</span>
-                </div>
 
-            </v-tooltip>
+        <div v-if="loading" class="loading">
+            <span></span>
         </div>
-    </section>
+        <section v-else  class="add-city">
+            <transition name="fade">
+<!--                блок нет городов-->
+                <div v-if="cities.length === 0" class="no-cities">
+                    <p>No cities added, add a new one?</p>
+                    <button @click="addNewCity">Add City</button>
+                </div>
+            </transition>
+            <transition name="fade">
+                <div class="add-city__content container">
+                    <v-tooltip bottom
+                               v-for="(city, index) in cities" :key="index">
+                        <template v-slot:activator="{ on, attrs }">
+                            <div class="add-city__city-link"
+                                 data-app
+                                 v-bind="attrs" v-on="on"
+                            >
+                                <City :city="city" :edit="edit"/>
+                            </div>
+                        </template>
+                        <div class="wrap">
+                            <span>feels like: {{city.main.feels_like}}&deg;</span>
+                            <span>humidity: {{city.main.humidity}}%</span>
+                            <span> temp min: {{city.main.temp_min}}&deg;</span>
+                            <span> temp max: {{city.main.temp_max}}&deg;</span>
+                            <span> wind gust: {{city.wind.speed}} meter/sec</span>
+                        </div>
+                    </v-tooltip>
+                </div>
+            </transition>
+
+        </section>
 
 </template>
 
 <script>
 
-    import City from "./City";
-    export default {
-        name: "addNewCity",
-        components: {
-            City,
-        },
-        props: ['cities', 'edit', 'loading'],
-        created() {
-            console.log('citiessss', this.cities);
+import City from './City.vue';
 
-
-        },
-        methods: {
-            addNewCity() {
-                this.$emit("add-NewCity")
-            },
-        }
-    }
+export default {
+  name: 'addNewCity',
+  components: {
+    City,
+  },
+  props: ['cities', 'edit', 'loading'],
+  methods: {
+    addNewCity() {
+      this.$emit('add-NewCity');
+    },
+  },
+};
 
 </script>
 
@@ -72,12 +73,8 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        color: #fff;
         font-size: 20px;
         font-weight: 600;
-        p{
-
-        }
             button {
                 margin-top: 16px;
                 padding: 8px 24px;
@@ -87,16 +84,14 @@
                 transition: 500ms ease all;
                 font-size: 20px;
                 font-weight: 600;
+                background-color: #edeee7;
                 &:hover {
                     outline: none;
                     transform: scale(0.98);
                 }
         }
     }
-
-
     @media (max-width: 768px) {
-    /*    +*/
     };
     &__content {
         display: flex;

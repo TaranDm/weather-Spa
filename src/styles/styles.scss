@@ -5,7 +5,9 @@
 
 body {
   font-family: 'Roboto', sans-serif;
-  background-color: #9c9c9c;
+  background: url("../assets/Background1.jpg") 100% center  no-repeat;
+  background-size: cover;
+  color:  #4f4f4f;
 }
 .main {
   padding-top: 81px;
@@ -76,5 +78,14 @@ body {
 .os-theme-dark > .os-scrollbar-horizontal, .os-theme-light > .os-scrollbar-horizontal {
   height: 11px;
 }
-
+   /*появление*/
+    .fade-enter-active, .fade-leave-active {
+        opacity: 1;
+        transition: all .5s ease;
+    }
+    /*удаление*/
+    .fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+        transition: all .5s ease;
+        opacity: 0;
+    }
 

@@ -1,10 +1,10 @@
 <!--ежедневный прогноз-->
-
 <template>
     <div class="daily-forecast">
 <!--        daily-forecast-->
         <div>
-            <span> {{ new Date(this.day.dt * 1000).toLocaleString("en-us", { weekday: "long" }) }} </span>
+            <span> {{ new Date(this.day.dt * 1000)
+                .toLocaleString("en-us", { weekday: "long" }) }} </span>
         </div>
         <div class="condition">
             <img :src="this.iconWeather" alt="">
@@ -21,15 +21,15 @@
 </template>
 
 <script>
-    export default {
-        name: "DailyForecast",
-        props: ["day"],
-        data() {
-            return {
-                iconWeather: `http://openweathermap.org/img/wn/${this.day.weather[0].icon}@2x.png`,
-            }
-        }
-    }
+export default {
+  name: 'DailyForecast',
+  props: ['day'],
+  data() {
+    return {
+      iconWeather: `http://openweathermap.org/img/wn/${this.day.weather[0].icon}@2x.png`,
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -37,7 +37,6 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        color: #fff;
         font-size: 20px;
         div {
             flex: 1;
