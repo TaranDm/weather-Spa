@@ -20,6 +20,5 @@ module.exports = {
   ],
   rules: {
       "no-alert": 1,
-      "linebreak-style": ["error", "windows"],
   },
 };

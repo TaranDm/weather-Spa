@@ -11,7 +11,6 @@
     "@mdi/font": "5.9.55",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
-    "firebase": "^8.2.10",
     "overlayscrollbars": "^1.13.1",
     "overlayscrollbars-vue": "^0.2.2",
     "roboto-fontface": "*",
