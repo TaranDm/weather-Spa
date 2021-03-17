@@ -20,5 +20,8 @@ module.exports = {
   ],
   rules: {
       "no-alert": 1,
+      "eslint linebreak-style": ["error", "windows"],
+
+
   },
 };
