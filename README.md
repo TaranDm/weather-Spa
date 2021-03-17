@@ -22,6 +22,10 @@ npm run build
 ```
 npm run lint
 ```
+### netlify link
+```
+https://weather-spa-td.netlify.app/
+```
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
