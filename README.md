@@ -1,4 +1,7 @@
 # weather-spa
+```
+These is application for viewing the weather in different cities.
+```
 
 ## Project setup
 ```
